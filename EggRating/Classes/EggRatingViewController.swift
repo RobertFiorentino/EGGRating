@@ -72,7 +72,7 @@ class EggRatingViewController: UIViewController {
         starRateView.starFillColor = EggRating.starFillColor
         starRateView.starBorderColor = EggRating.starBorderColor
         starRateView.starNormalColor = EggRating.starNormalColor
-        starRateView.step = 0.5
+        starRateView.step = EggRating.rateIncrementsInWholeNumbers ? 1.0 : 0.5
         starRateView.starSize = starContainerViewFrame.width/5.5
         starRateView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
@@ -114,7 +114,12 @@ class EggRatingViewController: UIViewController {
         let minRatingToAppStore = EggRating.minRatingToAppStore > 5 ? 5 : EggRating.minRatingToAppStore
         
         if rating >= minRatingToAppStore {
-            showRateInAppStoreAlertController()
+            if EggRating.skipAdditionalPrompt {
+                sendUserToAppStore()
+                self.dismiss(animated: false, completion: nil)
+            } else {
+                showRateInAppStoreAlertController()
+            }
             
             // only save last rated version if user rates more than mininum score
             UserDefaults.standard.set(EggRating.appVersion, forKey: EggRatingUserDefaultsKey.lastVersionRatedKey.rawValue)

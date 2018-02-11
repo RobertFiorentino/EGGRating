@@ -18,6 +18,12 @@ public class EggRating: NSObject {
     
     /// The condition to show alert dialog after user rated poor score.
     public static var shouldShowThankYouAlertController = true
+
+    /// True to skip the additional prompt after a good rating which asks user to write a review
+    public static var skipAdditionalPrompt = false
+
+    /// True if stars should change in whole increments instead of half
+    public static var rateIncrementsInWholeNumbers = false
     
     /// The condition to show EggRatingView after first time user start using the application, default is 10 days. This will be used only when debug mode is off.
     public static var daysUntilPrompt = 10 {
